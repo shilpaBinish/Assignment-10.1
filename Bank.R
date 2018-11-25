@@ -1,0 +1,20 @@
+getwd()
+setwd("D:\\R\\AirQualityUCI\\bank-additional\\bank-additional")
+Bank =read.csv("bank-additional.csv",na.strings = c(""," ","NA"),sep = ";")
+Bank
+str(Bank)
+library(Amelia)
+missmap(Bank)
+table(Bank$job)
+scatter.smooth(x=diamonds$carat, y=diamonds$price, main="Price~Carat")
+scatter.smooth(x=Bank$job,y=Bank$marital,main="job$marital")
+contVars<-c("job","marital")
+cont_df<-Bank[,names(Bank) %in% contVars]
+## Scatter plot
+pairs(cont_df)
+library(corrplot)
+corrplot(cor(cont_df), type = "full", "ellipse")
+fit <-lm(job~education,data=Bank)
+plot(job~marital,Bank)
+library(ggplot2)
+ggplot(Bank) + geom_point(aes(x=marital, y=job))
